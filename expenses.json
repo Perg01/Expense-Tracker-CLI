@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "description": "Groceries",
+    "amount": 100,
+    "createdAt": "2024-10-18T03:33:35.054Z",
+    "updatedAt": "2024-10-18T03:33:35.054Z"
+  },
+  {
+    "id": 2,
+    "description": "In-n-Out",
+    "amount": 6,
+    "createdAt": "2024-10-18T03:33:43.907Z",
+    "updatedAt": "2024-10-18T03:33:43.908Z"
+  }
+]

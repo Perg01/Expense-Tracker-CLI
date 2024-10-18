@@ -1,0 +1,6 @@
+add listallexpenses
+add updateexpense
+add deleteexpense
+add summaryexpenses
+add view expenses of specific month of current year
+
