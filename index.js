@@ -35,7 +35,7 @@ function addExpense(description, amount) {
 
     expenses.push(newExpense);
     saveExpense(expenses);
-    listAllExpenses();
+    // listAllExpenses();
     console.log(`Added expense: ${description} with amount: $${parsedAmount}`);
 }
 
