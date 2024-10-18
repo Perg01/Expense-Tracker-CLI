@@ -6,27 +6,17 @@ const { get } = require('http');
 
 const program = new Command();
 
-// program
-//     .option('-a, --add', 'Add an expense')
-//     .option('-l, --list', 'List all expenses')
-//     .option('-d, --delete <id>', 'Delete an expense')
-//     .parse(process.argv);
-
-// program.on('--help', function () {
-//     console.log('');
-//     console.log('  Examples:');
-//     console.log('');
-//     console.log('    $ node index.js --add "Pay electric bill"');
-//     console.log('    $ node index.js --list');
-//     console.log('    $ node index.js --delete 1');
-// });
-
 function addExpense(description, amount) {
     const expenses = getExpense();
     const parsedAmount = amountValidation(amount);
 
+    let nextID = 1;
+    while (expenses.find(expense => expense.id === nextID)) {
+        nextID++;
+    }
+
     const newExpense = {
-        id: expenses.length + 1,
+        id: nextID,
         description,
         amount: parsedAmount,
         createdAt: new Date().toISOString(),
@@ -37,6 +27,13 @@ function addExpense(description, amount) {
     saveExpense(expenses);
     // listAllExpenses();
     console.log(`Added expense: ${description} with amount: $${parsedAmount}`);
+}
+
+function deleteExpense(id) {
+    const expenses = getExpense();
+    const newExpeneses = expenses.filter(expense => expense.id !== parseInt(id));
+    saveExpense(newExpeneses);
+    console.log(`Deleted expense with id: ${id} successfully.`);
 }
 
 function listAllExpenses() {
@@ -98,7 +95,25 @@ program
 // Update command
 
 // Delete command
+program
+    .command('delete')
+    .description('Delete an expense')
+    .option('--id <id>', 'ID of the expense to be deleted')
+    .action((options) => {
+        const { id } = options;
+        if (id) {
+            deleteExpense(id);
+        } else {
+            console.error('Please provide a valid expense ID.');
+        }
+    });
 
 // List command
+program
+    .command('list')
+    .description('List all expenses')
+    .action(() => {
+        listAllExpenses();
+    });
 
 program.parse(process.argv);
