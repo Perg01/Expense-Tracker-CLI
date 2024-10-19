@@ -65,6 +65,31 @@ function updateExpenseAmount(id, amount) {
     }
 }
 
+function summaryExpenses() {
+    const expenses = getExpense();
+    const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
+    console.log(`Total expenses: $${totalExpenses}`);
+}
+
+function monthlySummaryExpenses(month) {
+    const expenses = getExpense();
+
+    if (month < 1 || month > 12) {
+        console.error("Invalid month. Month must be between 1 and 12.");
+        return;
+    } else {
+        const filteredExpenses = expenses.filter(expense => {
+            const expenseDate = new Date(expense.createdAt);
+            const expenseMonth = expenseDate.getMonth() + 1;
+            return expenseMonth === month;
+        });
+
+        const totalExpenses = filteredExpenses.reduce((total, expense) => total + expense.amount, 0);
+        console.log(`Total expenses for month ${month}: $${totalExpenses}`);
+
+    }
+}
+
 function listAllExpenses() {
     const expenses = getExpense();
     expenses.forEach(expense => {
