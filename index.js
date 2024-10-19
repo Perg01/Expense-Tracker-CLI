@@ -25,7 +25,7 @@ function addExpense(description, amount) {
 
     expenses.push(newExpense);
     saveExpense(expenses);
-    // listAllExpenses();
+    listAllExpenses();
     console.log(`Added expense: ${description} with amount: $${parsedAmount}`);
 }
 
@@ -34,6 +34,35 @@ function deleteExpense(id) {
     const newExpeneses = expenses.filter(expense => expense.id !== parseInt(id));
     saveExpense(newExpeneses);
     console.log(`Deleted expense with id: ${id} successfully.`);
+}
+
+function updateExpenseDescription(id, description) {
+    const expenses = getExpense();
+    const expenseIndex = expenses.findIndex(expense => expense.id === parseInt(id));
+
+    if (expenseIndex !== -1) {
+        expenses[expenseIndex].description = description;
+        expenses[expenseIndex].updatedAt = new Date().toISOString();
+        saveExpense(expenses);
+        console.log(`Updated description for expense with id: ${id} to: ${description}`);
+    } else {
+        console.error(`Could not find expense with id: ${id}`);
+    }
+}
+
+function updateExpenseAmount(id, amount) {
+    const expenses = getExpense();
+    const parsedAmount = amountValidation(amount);
+    const expenseIndex = expenses.findIndex(expense => expense.id === parseInt(id));
+
+    if (expenseIndex !== -1) {
+        expenses[expenseIndex].amount = parsedAmount;
+        expenses[expenseIndex].updatedAt = new Date().toISOString();
+        saveExpense(expenses);
+        console.log(`Updated amount for expense with id: ${id} to: $${parsedAmount}`);
+    } else {
+        console.error(`Could not find expense with id: ${id}`);
+    }
 }
 
 function listAllExpenses() {
@@ -92,7 +121,35 @@ program
         }
     });
 
-// Update command
+// Update Description command
+program
+    .command('update-description')
+    .description('Update the description of an expense')
+    .option('--id <id>', 'ID of the expense to be updated')
+    .option('--description <desc>', 'New description of the expense')
+    .action((options) => {
+        const { id, description } = options;
+        if (id && description) {
+            updateExpenseDescription(id, description);
+        } else {
+            console.error('Please provide BOTH the ID and description.');
+        }
+    });
+
+// Update Amount command
+program
+    .command('update-amount')
+    .description('Update the amount of an expense')
+    .option('--id <id>', 'ID of the expense to be updated')
+    .option('--amount <amount>', 'New amount of the expense')
+    .action((options) => {
+        const { id, amount } = options;
+        if (id && amount) {
+            updateExpenseAmount(id, amount);
+        } else {
+            console.error('Please provide BOTH the ID and amounts.');
+        }
+    });
 
 // Delete command
 program

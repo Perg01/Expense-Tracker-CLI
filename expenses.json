@@ -5,5 +5,19 @@
     "amount": 6,
     "createdAt": "2024-10-18T03:33:43.907Z",
     "updatedAt": "2024-10-18T03:33:43.908Z"
+  },
+  {
+    "id": 1,
+    "description": "Dinner with a friend",
+    "amount": 55,
+    "createdAt": "2024-10-19T00:12:31.566Z",
+    "updatedAt": "2024-10-19T00:18:16.622Z"
+  },
+  {
+    "id": 3,
+    "description": "rent",
+    "amount": 1200,
+    "createdAt": "2024-10-19T00:12:59.608Z",
+    "updatedAt": "2024-10-19T00:12:59.609Z"
   }
 ]
