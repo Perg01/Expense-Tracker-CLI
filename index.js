@@ -220,4 +220,26 @@ program
         }
     });
 
+program
+    .command('help')
+    .description('Display help information')
+    .action(() => {
+        console.log('Available commands:');
+        console.log('add: Add a new expense');
+        console.log('Example: add --description "New Expense" --amount 100');
+        console.log('');
+        console.log('update-description: Update the description of an expense');
+        console.log('Example: update-description --id 1 --description "Updated Description"');
+        console.log('');
+        console.log('update-amount: Update the amount of an expense');
+        console.log('Example: update-amount --id 1 --amount 200');
+        console.log('');
+        console.log('delete: Delete an expense');
+        console.log('list: List all expenses');
+        console.log('summary: Summary of all expenses');
+        console.log('summary-month: Summary of a specific month in current year');
+        console.log('Example: summary-month --month 4');
+        console.log('');
+    });
+
 program.parse(process.argv);
