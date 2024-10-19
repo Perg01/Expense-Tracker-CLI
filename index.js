@@ -80,8 +80,8 @@ function monthlySummaryExpenses(month) {
     } else {
         const filteredExpenses = expenses.filter(expense => {
             const expenseDate = new Date(expense.createdAt);
-            const expenseMonth = expenseDate.getMonth() + 1;
-            return expenseMonth === month;
+            const expenseMonth = expenseDate.getMonth();
+            return expenseMonth === month - 1;
         });
 
         const totalExpenses = filteredExpenses.reduce((total, expense) => total + expense.amount, 0);
@@ -196,6 +196,28 @@ program
     .description('List all expenses')
     .action(() => {
         listAllExpenses();
+    });
+
+// Summary command
+program
+    .command('summary')
+    .description('Summary of all expenses')
+    .action(() => {
+        summaryExpenses();
+    });
+
+// Specific Month Summary command
+program
+    .command('summary-month')
+    .description('Summary of a specific month in current year')
+    .option('--month <month>', 'Month to be summarized')
+    .action((options) => {
+        const { month } = options;
+        if (month) {
+            monthlySummaryExpenses(month);
+        } else {
+            console.error('Please provide a valid month.');
+        }
     });
 
 program.parse(process.argv);
